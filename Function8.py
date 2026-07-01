@@ -29,21 +29,21 @@ hello()
 
 # def palindrome_checker(a):
     
-#     copy = a 
-#     rev = 0
+    copy = a 
+    rev = 0
 
-#     while a > 0:
-#         rev = rev * 10 + a% 10 
-#         a= a//10
+    while a > 0:
+        rev = rev * 10 + a% 10 
+        a= a//10
 
-#     if copy == rev:
-#         print (f"{copy} is a palindrom number")
-#     else:
-#         print(f"{copy} is not a palindrom number ")
+    if copy == rev:
+        print (f"{copy} is a palindrom number")
+    else:
+        print(f"{copy} is not a palindrom number ")
 
-# palindrome_checker(121)
-# palindrome_checker(231)
-# palindrome_checker(654)
+palindrome_checker(121)
+palindrome_checker(231)
+palindrome_checker(654)
 
 
 # parameter are the value you accept while calling the function 
