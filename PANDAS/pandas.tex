@@ -64,6 +64,64 @@ Agar Series = Ek Column hai, to DataFrame = Multiple Columns hain.
 
 Jab hum DataFrame bana lete hain, tab hume kisi particular column ya multiple columns ka data nikalna hota hai. Is process ko Selection of Columns kehte hain.
 
+Q . Create a new column in list 
+df["Designation"] = ["Doctor","Eng","Doctor","Eng"] 
+df
+
+
+///////////////////////Remove a column ////////////////////////////
+
+# esse humlo column ko delete kr sakte hai 
+df.drop("Designation", axis=1,inplace=True ) #implace ka matlab yah hai ki jab humlog kisi bhi chis ka drop krte hai toh usko inplace laga kr kisi bhi area ko remove kr sakte hai 
+
+# Display DataFrame
+print(df)
+
+
+
+/////////////////////Selecting Rows///////////////////////////////////
+
+Rows select karne ke liye Pandas me mainly 3 methods use hote hain:
+
+1. loc[] → Label (Index Name) se row select karta hai.
+2. iloc[] → Position (Row Number) se row select karta hai.
+3. Condition (Filtering) → Kisi condition ke basis par rows select karta hai.
+
+
+\\\\\\\\\\\\\\\\\\\\ Conditional Selection////////////////////////
+
+Conditional Selection ka matlab hai kisi condition ke basis par rows ya data ko select karna.
+
+Jaise:
+
+Marks 80 se zyada wale students.
+Age 18 se kam wale students.
+Salary 50000 se zyada wale employees.
+
+Ye sab Conditional Selection ke examples hain.
+
+
+
+
+///////////////////////////////////     Missing Data      /////////////////////////////
+
+Finding missing data 
+
+Missing Data ka matlab hota hai ki dataset me kuch values available nahi hoti ya blank (NaN/Null) hoti hain. Ye data collection ya data entry ke time kisi wajah se missing ho sakti hain.
+
+Types of Missing Data
+1. Missing Completely at Random (MCAR)
+Missing value ka kisi bhi dusre data se koi relation nahi hota.
+Ye bilkul random hota hai.
+
+
+
+job hum do data ko murge krna chate hai toh hum 
+
+pd.merge(data1 name, data2 name , on = 'emoployee_id', how = "inner')
+
+
+//////////////// Thresh old ka matlab hota hai ki humlog kitne missing value ko allow karenge kisi bhi row me ya column me. Agar humlog 2 ka threshold set karte hai toh iska matlab hai ki agar kisi bhi row me 2 se zyada missing value hai toh usko drop kar do otherwise usko rakh do.////////////////
 
 
 
