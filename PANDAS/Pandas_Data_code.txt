@@ -1,0 +1,2196 @@
+PANDAS FOR DATA ANALYST
+COMPLETE CODE + SIMPLE EXPLANATION + WHY USED
+============================================================
+
+IMPORTANT:
+Is file ka purpose Pandas ke Data Analyst use-cases ko samajhna hai.
+Har section me:
+1. Code
+2. Kya karta hai
+3. Kyu use hota hai
+4. Jahan useful ho, wahan example
+
+============================================================
+1. IMPORT
+============================================================
+
+CODE:
+import pandas as pd
+import numpy as np
+
+KYA KARTA HAI:
+- pandas ko pd naam se import karta hai.
+- numpy ko np naam se import karta hai.
+
+KYU USE HOTA HAI:
+Pandas tabular data analysis ke liye aur NumPy numerical operations ke liye use hota hai.
+
+EXAMPLE:
+np.nan
+Missing value represent karne ke liye useful hai.
+
+
+============================================================
+2. LOAD / SAVE DATA
+============================================================
+
+CODE:
+df = pd.read_csv("data.csv")
+
+KYA KARTA HAI:
+CSV file ko Pandas DataFrame me load karta hai.
+
+KYU:
+Real-world datasets aksar CSV format me milte hain.
+
+
+CODE:
+df = pd.read_excel("data.xlsx")
+
+KYA:
+Excel file ko DataFrame me load karta hai.
+
+KYU:
+Companies me Excel data/reporting common hoti hai.
+
+
+CODE:
+df = pd.read_json("data.json")
+
+KYA:
+JSON data ko DataFrame me load karta hai.
+
+KYU:
+APIs aur web applications se JSON data commonly milta hai.
+
+
+CODE:
+df = pd.read_sql("SELECT * FROM employees", connection)
+
+KYA:
+SQL database se query ka result DataFrame me laata hai.
+
+KYU:
+Database data ko Python/Pandas me analyze karne ke liye.
+
+WORKFLOW:
+MySQL -> SQL Query -> Pandas -> Analysis
+
+
+SAVE DATA:
+
+CODE:
+df.to_csv("output.csv", index=False)
+df.to_excel("output.xlsx", index=False)
+df.to_json("output.json")
+
+KYA:
+DataFrame ko CSV, Excel ya JSON file me save karta hai.
+
+KYU:
+Cleaned/analyzed data ko report ya future use ke liye export karne ke liye.
+
+index=False:
+Pandas index ko extra column ke roop me save hone se rokta hai.
+
+
+============================================================
+3. UNDERSTAND DATA
+============================================================
+
+CODE:
+df.head()
+df.head(10)
+
+KYA:
+First 5 rows (default) ya first 10 rows dikhata hai.
+
+KYU:
+Data load karne ke baad quickly dekhne ke liye ki data kaisa hai.
+
+
+CODE:
+df.tail()
+df.tail(10)
+
+KYA:
+Last 5 ya last 10 rows dikhata hai.
+
+KYU:
+Dataset ke end ka data inspect karne ke liye.
+
+
+CODE:
+df.shape
+
+KYA:
+(rows, columns) return karta hai.
+
+EXAMPLE:
+(1000, 8)
+
+MEANING:
+1000 rows aur 8 columns.
+
+KYU:
+Dataset ka size quickly jaanne ke liye.
+
+
+CODE:
+df.columns
+
+KYA:
+Saare column names batata hai.
+
+KYU:
+Available fields/variables ko identify karne ke liye.
+
+
+CODE:
+df.index
+
+KYA:
+Rows ke index labels ki information deta hai.
+
+KYU:
+Index-based selection aur organization ke liye.
+
+
+CODE:
+df.info()
+
+KYA:
+Columns, non-null values, data types aur memory usage ki information deta hai.
+
+KYU:
+Data cleaning se pehle dataset ki technical condition samajhne ke liye.
+
+
+CODE:
+df.describe()
+
+KYA:
+Numerical columns ka statistical summary deta hai:
+count, mean, std, min, 25%, 50%, 75%, max.
+
+KYU:
+Dataset ka statistical overview quickly samajhne ke liye.
+
+
+CODE:
+df.dtypes
+
+KYA:
+Har column ka data type batata hai.
+
+KYU:
+Wrong data types analysis aur calculations me problem create kar sakte hain.
+
+
+CODE:
+df.memory_usage()
+
+KYA:
+DataFrame ke memory usage ki information deta hai.
+
+KYU:
+Large datasets me memory optimization samajhne ke liye.
+
+
+CODE:
+df.nunique()
+
+KYA:
+Har column me unique values ki count deta hai.
+
+KYU:
+Categories aur distinct values samajhne ke liye.
+
+
+CODE:
+df.count()
+
+KYA:
+Har column me non-null values count karta hai.
+
+KYU:
+Available records ka count jaanne ke liye.
+
+
+CODE:
+df.sample(5)
+
+KYA:
+Random 5 rows deta hai.
+
+KYU:
+Large dataset ko randomly inspect karne ke liye.
+
+
+============================================================
+4. SELECT COLUMNS / ROWS
+============================================================
+
+CODE:
+df["Name"]
+
+KYA:
+Sirf Name column select karta hai.
+
+KYU:
+Ek particular column par analysis karne ke liye.
+
+
+CODE:
+df[["Name", "Age", "Salary"]]
+
+KYA:
+Multiple selected columns return karta hai.
+
+KYU:
+Analysis me sirf required columns use karne ke liye.
+
+
+ILOC:
+
+CODE:
+df.iloc[0]
+df.iloc[0:5]
+df.iloc[:, 0]
+df.iloc[:, 0:3]
+
+KYA:
+Integer position ke basis par rows/columns select karta hai.
+
+SIMPLE RULE:
+iloc = position based selection
+
+EXAMPLE:
+df.iloc[0] -> first row
+df.iloc[:, 0] -> first column
+
+
+LOC:
+
+CODE:
+df.loc[0]
+df.loc[0:5, ["Name", "Salary"]]
+
+KYA:
+Index labels aur conditions ke basis par data select karta hai.
+
+SIMPLE RULE:
+loc = label/condition based selection
+
+KYU:
+Specific rows aur columns ko targeted way me select karne ke liye.
+
+
+============================================================
+5. FILTERING
+============================================================
+
+CODE:
+df[df["Age"] > 25]
+
+KYA:
+Age 25 se zyada wale records deta hai.
+
+KYU:
+Business question ka answer nikalne ke liye.
+
+EXAMPLE QUESTION:
+25 se zyada age wale employees kaun hain?
+
+
+CODE:
+df[df["Salary"] > 50000]
+
+KYA:
+50,000 se zyada salary wale records.
+
+
+CODE:
+df[df["Department"] == "IT"]
+
+KYA:
+Sirf IT department ke records.
+
+
+CODE:
+df[df["Salary"] >= 50000]
+
+KYA:
+50,000 ya usse zyada salary.
+
+
+CODE:
+df[df["Age"] != 25]
+
+KYA:
+Age 25 ko exclude karta hai.
+
+
+MULTIPLE CONDITIONS:
+
+CODE:
+df[(df["Age"] > 25) & (df["Salary"] > 50000)]
+
+KYA:
+Dono conditions true honi chahiye.
+
+& = AND
+
+CODE:
+df[(df["Department"] == "IT") | (df["Department"] == "HR")]
+
+KYA:
+IT ya HR department ke records.
+
+| = OR
+
+
+CODE:
+df[df["Department"].isin(["IT", "HR", "Sales"])]
+
+KYA:
+Department IT, HR ya Sales me se koi ho.
+
+KYU:
+Multiple categories ko easily filter karne ke liye.
+
+
+CODE:
+df[df["Age"].between(20, 30)]
+
+KYA:
+20 se 30 ke range wale records.
+
+KYU:
+Range-based filtering ke liye.
+
+
+CODE:
+df.query("Age > 25")
+
+KYA:
+Readable query syntax se filter karta hai.
+
+CODE:
+df.query("Salary > 50000 and Age > 25")
+
+KYA:
+Multiple conditions ko readable form me apply karta hai.
+
+KYU:
+Complex filtering ko concise aur readable banane ke liye.
+
+
+============================================================
+6. SORTING
+============================================================
+
+CODE:
+df.sort_values("Salary")
+
+KYA:
+Salary ke ascending order me sort karta hai.
+
+CODE:
+df.sort_values("Salary", ascending=False)
+
+KYA:
+Highest salary se lowest salary.
+
+KYU:
+Top salary, top sales, top performers etc. identify karne ke liye.
+
+
+CODE:
+df.sort_values(["Department", "Salary"])
+
+KYA:
+Pehle Department ke basis par aur uske andar Salary ke basis par sort karta hai.
+
+KYU:
+Multi-level sorting ke liye.
+
+
+CODE:
+df.sort_index()
+
+KYA:
+Index ke according sort karta hai.
+
+KYU:
+Index order ko organize karne ke liye.
+
+
+============================================================
+7. MISSING VALUES
+============================================================
+
+CODE:
+df.isnull()
+df.isna()
+
+KYA:
+Har cell me missing value hai ya nahi check karta hai.
+
+KYU:
+Data cleaning ka basic step.
+
+
+CODE:
+df.isnull().sum()
+df.isna().sum()
+
+KYA:
+Har column me missing values ki count.
+
+KYU:
+Kaunse columns me problem hai identify karne ke liye.
+
+
+CODE:
+df.isnull().mean() * 100
+
+KYA:
+Har column ka missing-value percentage.
+
+KYU:
+Missing data kitna significant hai ye samajhne ke liye.
+
+
+DROPNA:
+
+CODE:
+df.dropna()
+
+KYA:
+Missing values wali rows remove karta hai.
+
+CODE:
+df.dropna(axis=0)
+
+KYA:
+Rows remove karne ka explicit form.
+
+CODE:
+df.dropna(axis=1)
+
+KYA:
+Missing-value condition ke according columns remove karta hai.
+
+CODE:
+df.dropna(subset=["Salary"])
+
+KYA:
+Salary missing hone wale records remove karta hai.
+
+KYU:
+Jab missing records ko remove karna data/business context me appropriate ho.
+
+IMPORTANT:
+Blindly dropna() use nahi karna chahiye.
+
+
+FILLNA:
+
+CODE:
+df.fillna(0)
+
+KYA:
+Missing values ko 0 se fill karta hai.
+
+CODE:
+df["Salary"].fillna(df["Salary"].mean())
+
+KYA:
+Missing Salary ko average Salary se fill karta hai.
+
+CODE:
+df["Age"].fillna(df["Age"].median())
+
+KYA:
+Missing Age ko median Age se fill karta hai.
+
+CODE:
+df["Department"].fillna("Unknown")
+
+KYA:
+Missing Department ko Unknown label deta hai.
+
+KYU:
+Missing information ko handle karne ke liye.
+
+IMPORTANT:
+Mean, median, mode ya fixed value ka choice data distribution aur business context par depend karta hai.
+
+
+FORWARD / BACKWARD FILL:
+
+CODE:
+df.ffill()
+
+KYA:
+Previous available value se missing value fill karta hai.
+
+CODE:
+df.bfill()
+
+KYA:
+Next available value se missing value fill karta hai.
+
+KYU:
+Ordered/time-series data me useful.
+
+
+============================================================
+8. DUPLICATES
+============================================================
+
+CODE:
+df.duplicated()
+
+KYA:
+Duplicate rows ko True/False ke form me identify karta hai.
+
+CODE:
+df.duplicated().sum()
+
+KYA:
+Total duplicate rows count karta hai.
+
+CODE:
+df.drop_duplicates()
+
+KYA:
+Duplicate rows remove karta hai.
+
+CODE:
+df.drop_duplicates(subset=["Email"])
+
+KYA:
+Email ke basis par duplicate records remove karta hai.
+
+CODE:
+df.drop_duplicates(subset=["Email"], keep="last")
+
+KYA:
+Same email ke records me last occurrence retain karta hai.
+
+KYU:
+Duplicate data counts, totals aur reports ko distort kar sakta hai.
+
+
+============================================================
+9. RENAME COLUMNS
+============================================================
+
+CODE:
+df.rename(columns={"old_name": "new_name"})
+
+KYA:
+Column name change karta hai.
+
+CODE:
+df.rename(
+    columns={"old_name": "new_name"},
+    inplace=True
+)
+
+KYA:
+Name change karke original DataFrame me directly apply karta hai.
+
+KYU:
+Messy, unclear ya inconsistent column names ko standardize karne ke liye.
+
+EXAMPLE:
+Salary -> Annual_Salary
+
+
+============================================================
+10. ADD / REMOVE COLUMNS
+============================================================
+
+CODE:
+df["Bonus"] = df["Salary"] * 0.10
+
+KYA:
+Salary ka 10% Bonus calculate karke new column banata hai.
+
+KYU:
+Derived metrics banane ke liye.
+
+
+CODE:
+df["Total"] = df["Salary"] + df["Bonus"]
+
+KYA:
+Salary aur Bonus ko add karke Total banata hai.
+
+
+REMOVE:
+
+CODE:
+df.drop(columns=["Bonus"])
+
+KYA:
+Bonus column remove karta hai.
+
+CODE:
+df.drop(columns=["Bonus"], inplace=True)
+
+KYA:
+Original DataFrame se column remove karta hai.
+
+
+============================================================
+11. APPLY
+============================================================
+
+CODE:
+df["Salary"].apply(lambda x: x * 1.10)
+
+KYA:
+Salary ki har value par 1.10 multiply karta hai.
+
+KYU:
+Custom calculation/logic har row/value par apply karne ke liye.
+
+
+CODE:
+df["Category"] = df["Salary"].apply(
+    lambda x: "High" if x > 50000 else "Low"
+)
+
+KYA:
+Salary > 50,000 ko High, otherwise Low category deta hai.
+
+KYU:
+Classification aur business rules implement karne ke liye.
+
+
+============================================================
+12. MAP
+============================================================
+
+CODE:
+df["Gender"] = df["Gender"].map({
+    "M": "Male",
+    "F": "Female"
+})
+
+KYA:
+M ko Male aur F ko Female me map karta hai.
+
+KYU:
+Codes/abbreviations ko readable values me convert karne ke liye.
+
+
+============================================================
+13. REPLACE
+============================================================
+
+CODE:
+df.replace("N/A", np.nan)
+
+KYA:
+N/A ko missing value NaN me convert karta hai.
+
+CODE:
+df["Department"].replace({
+    "IT Dept": "IT",
+    "Human Resource": "HR"
+})
+
+KYA:
+Inconsistent labels ko standard labels me convert karta hai.
+
+KYU:
+Messy data ko consistent banane ke liye.
+
+
+============================================================
+14. STRING OPERATIONS
+============================================================
+
+CODE:
+df["Name"].str.lower()
+
+KYA:
+Text ko lowercase karta hai.
+
+CODE:
+df["Name"].str.upper()
+
+KYA:
+Text ko uppercase karta hai.
+
+CODE:
+df["Name"].str.title()
+
+KYA:
+Title Case me convert karta hai.
+
+CODE:
+df["Name"].str.strip()
+
+KYA:
+Beginning/end ke extra spaces remove karta hai.
+
+CODE:
+df["Name"].str.len()
+
+KYA:
+Text ki length calculate karta hai.
+
+KYU:
+Text data clean, standardize aur analyze karne ke liye.
+
+
+SEARCH:
+
+CODE:
+df["Name"].str.contains("Rahul")
+
+KYA:
+Name me Rahul text present hai ya nahi check karta hai.
+
+CODE:
+df["Name"].str.startswith("A")
+
+KYA:
+A se start hone wale names identify karta hai.
+
+CODE:
+df["Name"].str.endswith("n")
+
+KYA:
+n par end hone wale names identify karta hai.
+
+KYU:
+Names, emails, addresses aur product descriptions filter karne ke liye.
+
+
+TRANSFORM:
+
+CODE:
+df["Name"].str.replace("old", "new")
+
+KYA:
+Text ka specific part replace karta hai.
+
+CODE:
+df["Email"].str.split("@")
+
+KYA:
+Email ko @ ke around split karta hai.
+
+CODE:
+df["Email"].str.extract(r"@(.*)")
+
+KYA:
+Regex se email domain extract kar sakta hai.
+
+KYU:
+Text cleaning aur information extraction ke liye.
+
+
+============================================================
+15. DATE / TIME
+============================================================
+
+CODE:
+df["Date"] = pd.to_datetime(df["Date"])
+
+KYA:
+Date column ko proper datetime format me convert karta hai.
+
+KYU:
+Date filtering, grouping aur calculations ke liye.
+
+
+CODE:
+df["Date"].dt.year
+df["Date"].dt.month
+df["Date"].dt.day
+df["Date"].dt.day_name()
+df["Date"].dt.month_name()
+df["Date"].dt.quarter
+
+KYA:
+Date se year, month, day, weekday name, month name aur quarter nikalta hai.
+
+KYU:
+Monthly, yearly, quarterly aur daily trend analysis ke liye.
+
+
+CODE:
+df["Year"] = df["Date"].dt.year
+df["Month"] = df["Date"].dt.month
+
+KYA:
+Year aur Month ke new columns create karta hai.
+
+
+CODE:
+df[df["Date"] >= "2026-01-01"]
+
+KYA:
+1 January 2026 ya uske baad ke records filter karta hai.
+
+KYU:
+Date-based reporting aur time period analysis ke liye.
+
+
+============================================================
+16. BASIC STATISTICS
+============================================================
+
+CODE:
+df["Salary"].mean()
+
+KYA:
+Average Salary.
+
+CODE:
+df["Salary"].median()
+
+KYA:
+Middle value.
+
+CODE:
+df["Salary"].mode()
+
+KYA:
+Most frequently occurring value(s).
+
+CODE:
+df["Salary"].sum()
+
+KYA:
+Total Salary.
+
+CODE:
+df["Salary"].min()
+
+KYA:
+Minimum Salary.
+
+CODE:
+df["Salary"].max()
+
+KYA:
+Maximum Salary.
+
+CODE:
+df["Salary"].std()
+
+KYA:
+Standard deviation; data values average se kitna spread hain, iska measure.
+
+CODE:
+df["Salary"].var()
+
+KYA:
+Variance; spread ka squared measure.
+
+CODE:
+df["Salary"].count()
+
+KYA:
+Non-missing Salary values ka count.
+
+KYU:
+Numerical data ka summary aur business metrics calculate karne ke liye.
+
+
+QUANTILE:
+
+CODE:
+df["Salary"].quantile(0.25)
+df["Salary"].quantile(0.50)
+df["Salary"].quantile(0.75)
+
+KYA:
+25th, 50th aur 75th percentile calculate karta hai.
+
+0.50 = Median.
+
+KYU:
+Distribution samajhne aur outlier detection me useful.
+
+
+============================================================
+17. CORRELATION
+============================================================
+
+CODE:
+df.corr(numeric_only=True)
+
+KYA:
+Numeric columns ke pairwise correlations calculate karta hai.
+
+CODE:
+df["Salary"].corr(df["Age"])
+
+KYA:
+Age aur Salary ke beech correlation calculate karta hai.
+
+KYU:
+Variables ke relationship ko explore karne ke liye.
+
+IMPORTANT:
+Correlation relationship/association ko measure karta hai; correlation alone causation prove nahi karta.
+
+
+============================================================
+18. GROUPBY
+============================================================
+
+CODE:
+df.groupby("Department")["Salary"].mean()
+
+KYA:
+Department-wise average Salary.
+
+EXAMPLE QUESTION:
+"Har department ki average salary kya hai?"
+
+CODE:
+df.groupby("Department")["Salary"].sum()
+
+KYA:
+Department-wise total Salary.
+
+CODE:
+df.groupby("Department")["Salary"].max()
+
+KYA:
+Har department ki maximum Salary.
+
+KYU:
+Category-wise business analysis aur reporting ke liye.
+
+
+============================================================
+19. GROUPBY + MULTIPLE FUNCTIONS
+============================================================
+
+CODE:
+df.groupby("Department")["Salary"].agg(
+    ["mean", "sum", "min", "max", "count"]
+)
+
+KYA:
+Har department ke liye ek saath:
+- average
+- total
+- minimum
+- maximum
+- count
+
+calculate karta hai.
+
+KYU:
+Ek report me multiple KPIs nikalne ke liye.
+
+
+CODE:
+df.groupby("Department").agg({
+    "Salary": "mean",
+    "Age": "mean"
+})
+
+KYA:
+Department-wise average Salary aur average Age.
+
+KYU:
+Ek se zyada columns ka grouped analysis.
+
+
+============================================================
+20. GROUPBY + MULTIPLE FUNCTIONS ON MULTIPLE COLUMNS
+============================================================
+
+CODE:
+df.groupby("Department").agg({
+    "Salary": ["mean", "max", "min"],
+    "Age": ["mean", "max"],
+    "Employee": "count"
+})
+
+KYA:
+Ek hi grouped report me different columns par different aggregations.
+
+KYU:
+Detailed business summary/reporting ke liye.
+
+
+============================================================
+21. VALUE COUNTS
+============================================================
+
+CODE:
+df["Department"].value_counts()
+
+KYA:
+Har Department me kitne records hain.
+
+EXAMPLE:
+IT -> 100
+HR -> 50
+Sales -> 80
+
+CODE:
+df["Department"].value_counts(normalize=True)
+
+KYA:
+Counts ko proportion/relative frequency ke form me deta hai.
+
+CODE:
+df["Department"].value_counts(dropna=False)
+
+KYA:
+Missing values ko bhi count me include karta hai.
+
+KYU:
+Category distribution samajhne ke liye.
+
+
+============================================================
+22. PIVOT TABLE
+============================================================
+
+CODE:
+pd.pivot_table(
+    df,
+    values="Salary",
+    index="Department",
+    aggfunc="mean"
+)
+
+KYA:
+Department-wise average Salary ka summary table banata hai.
+
+KYU:
+Excel Pivot Table jaisa summarized analysis karne ke liye.
+
+
+CODE:
+pd.pivot_table(
+    df,
+    values="Salary",
+    index="Department",
+    columns="Gender",
+    aggfunc="mean"
+)
+
+KYA:
+Department aur Gender ke combination ke according average Salary summarize karta hai.
+
+KYU:
+Multi-dimensional analysis aur reporting ke liye.
+
+
+============================================================
+23. CROSSTAB
+============================================================
+
+CODE:
+pd.crosstab(df["Department"], df["Gender"])
+
+KYA:
+Department aur Gender ke combinations ka count table banata hai.
+
+KYU:
+Do categorical variables ka frequency analysis.
+
+
+CODE:
+pd.crosstab(
+    df["Department"],
+    df["Gender"],
+    normalize="index"
+)
+
+KYA:
+Har department ke andar gender distribution ko proportion me dikhata hai.
+
+KYU:
+Percentage-based categorical comparison ke liye.
+
+
+============================================================
+24. MERGE / SQL-LIKE JOIN
+============================================================
+
+CODE:
+pd.merge(df1, df2, on="Employee_ID", how="inner")
+
+KYA:
+Common Employee_ID wale records combine karta hai.
+
+SQL concept:
+INNER JOIN
+
+
+CODE:
+pd.merge(df1, df2, on="Employee_ID", how="left")
+
+KYA:
+df1 ke saare records preserve karta hai aur matching df2 data add karta hai.
+
+SQL concept:
+LEFT JOIN
+
+
+CODE:
+pd.merge(df1, df2, on="Employee_ID", how="right")
+
+KYA:
+df2 ke saare records preserve karta hai.
+
+SQL concept:
+RIGHT JOIN
+
+
+CODE:
+pd.merge(df1, df2, on="Employee_ID", how="outer")
+
+KYA:
+Dono datasets ke records preserve karta hai.
+
+SQL concept:
+FULL OUTER JOIN
+
+
+KYU:
+Real-world data alag-alag tables/files me hota hai. Common key ke through unhe combine karna padta hai.
+
+
+DIFFERENT COLUMN NAMES:
+
+CODE:
+pd.merge(
+    df1,
+    df2,
+    left_on="Employee_ID",
+    right_on="ID",
+    how="left"
+)
+
+KYA:
+Jab joining column ke names alag hon, tab use hota hai.
+
+
+============================================================
+25. CONCATENATION
+============================================================
+
+CODE:
+pd.concat([df1, df2])
+
+KYA:
+DataFrames ko combine karta hai.
+
+CODE:
+pd.concat([df1, df2], ignore_index=True)
+
+KYA:
+Rows combine karte waqt new continuous index banata hai.
+
+CODE:
+pd.concat([df1, df2], axis=1)
+
+KYA:
+DataFrames ko side-by-side columns ke roop me combine karta hai.
+
+KYU:
+January + February jaise same-structure datasets combine karne ke liye.
+
+
+============================================================
+26. JOIN
+============================================================
+
+CODE:
+df1.join(df2)
+
+KYA:
+Generally index ke basis par DataFrames join karta hai.
+
+CODE:
+df1.join(df2, how="left")
+
+KYA:
+Left join style me index-based data combine karta hai.
+
+KYU:
+Index-aligned DataFrames ko combine karne ke liye.
+
+
+============================================================
+27. INDEX
+============================================================
+
+CODE:
+df.set_index("Employee_ID")
+
+KYA:
+Employee_ID ko DataFrame index banata hai.
+
+CODE:
+df.reset_index()
+
+KYA:
+Index ko normal column me wapas laata hai.
+
+CODE:
+df.reset_index(drop=True)
+
+KYA:
+Purane index ko remove karke new default index set karta hai.
+
+CODE:
+df.rename_axis("Employee_ID")
+
+KYA:
+Index ka name set karta hai.
+
+KYU:
+Data ko organize aur index-based analysis ke liye.
+
+
+============================================================
+28. UNIQUE VALUES
+============================================================
+
+CODE:
+df["Department"].unique()
+
+KYA:
+Actual unique Department values ki list deta hai.
+
+EXAMPLE:
+["IT", "HR", "Sales"]
+
+CODE:
+df["Department"].nunique()
+
+KYA:
+Unique values ki total count deta hai.
+
+EXAMPLE:
+3
+
+KYU:
+Categories inspect aur count karne ke liye.
+
+
+============================================================
+29. DATA TYPE CONVERSION
+============================================================
+
+CODE:
+df["Age"] = df["Age"].astype(int)
+df["Salary"] = df["Salary"].astype(float)
+df["Name"] = df["Name"].astype(str)
+df["Date"] = pd.to_datetime(df["Date"])
+
+KYA:
+Columns ko appropriate data types me convert karta hai.
+
+KYU:
+Correct calculations aur filtering ke liye.
+
+
+CODE:
+df["Salary"] = pd.to_numeric(
+    df["Salary"],
+    errors="coerce"
+)
+
+KYA:
+Salary ko numeric format me convert karta hai.
+Invalid values ko NaN me convert karta hai.
+
+KYU:
+Messy numeric data clean karne ke liye.
+
+
+============================================================
+30. DATA CLEANING
+============================================================
+
+CODE:
+df.columns = df.columns.str.strip()
+
+KYA:
+Column names ke extra spaces remove karta hai.
+
+
+CODE:
+df.columns = df.columns.str.lower()
+
+KYA:
+Column names lowercase me convert karta hai.
+
+
+CODE:
+df.columns = df.columns.str.replace(" ", "_")
+
+KYA:
+Column names ke spaces ko underscore se replace karta hai.
+
+EXAMPLE:
+"Annual Salary" -> "annual_salary"
+
+KYU:
+Column names ko standardized aur coding-friendly banane ke liye.
+
+
+COMMON CLEANING COMMANDS:
+df.drop_duplicates()
+df.isnull().sum()
+df.fillna()
+df.replace()
+df.astype()
+pd.to_numeric()
+pd.to_datetime()
+
+KYA:
+Ye commands duplicate, missing values, inconsistent values aur wrong data types ko handle karne me help karte hain.
+
+
+============================================================
+31. OUTLIER DETECTION - IQR
+============================================================
+
+CODE:
+Q1 = df["Salary"].quantile(0.25)
+Q3 = df["Salary"].quantile(0.75)
+IQR = Q3 - Q1
+
+lower = Q1 - 1.5 * IQR
+upper = Q3 + 1.5 * IQR
+
+outliers = df[
+    (df["Salary"] < lower) |
+    (df["Salary"] > upper)
+]
+
+KYA:
+IQR method se unusually low/high observations identify karta hai.
+
+KYU:
+Outliers statistics aur analysis ko strongly affect kar sakte hain.
+
+IMPORTANT:
+Har outlier error nahi hota.
+Example:
+Ek employee ki salary bahut high ho sakti hai aur wo actual value ho sakti hai.
+Isliye outlier ko remove karne se pehle business context check karo.
+
+
+REMOVE OUTLIERS:
+
+CODE:
+df = df[
+    (df["Salary"] >= lower) &
+    (df["Salary"] <= upper)
+]
+
+KYA:
+IQR boundaries ke bahar ke records remove karta hai.
+
+IMPORTANT:
+Ye tabhi karo jab analysis/business context ke according removal justified ho.
+
+
+============================================================
+32. BINNING / CATEGORIZATION
+============================================================
+
+CODE:
+bins = [0, 18, 30, 50, 100]
+labels = ["Teen", "Young", "Middle", "Senior"]
+
+df["Age_Group"] = pd.cut(
+    df["Age"],
+    bins=bins,
+    labels=labels
+)
+
+KYA:
+Continuous Age values ko categories me convert karta hai.
+
+EXAMPLE:
+22 -> Young
+35 -> Middle
+
+KYU:
+Segmentation aur dashboard/reporting me useful.
+
+
+============================================================
+33. RANKING
+============================================================
+
+CODE:
+df["Salary_Rank"] = df["Salary"].rank(
+    ascending=False
+)
+
+KYA:
+Salary ke basis par rank assign karta hai.
+
+KYU:
+Top employees, products, customers ya sales records identify karne ke liye.
+
+
+============================================================
+34. CUMULATIVE ANALYSIS
+============================================================
+
+CODE:
+df["Cumulative_Sales"] = df["Sales"].cumsum()
+
+KYA:
+Running total calculate karta hai.
+
+EXAMPLE:
+Sales:
+100
+200
+300
+
+Cumulative:
+100
+300
+600
+
+KYU:
+Running sales/revenue analysis ke liye.
+
+
+CODE:
+df["Running_Max"] = df["Sales"].cummax()
+
+KYA:
+Har point tak ka maximum value maintain karta hai.
+
+KYU:
+Running peak/trend analysis ke liye.
+
+
+============================================================
+35. DIFFERENCE / GROWTH
+============================================================
+
+CODE:
+df["Difference"] = df["Sales"].diff()
+
+KYA:
+Current value aur previous value ka difference calculate karta hai.
+
+KYU:
+Day-over-day ya month-over-month absolute change dekhne ke liye.
+
+
+CODE:
+df["Growth"] = df["Sales"].pct_change() * 100
+
+KYA:
+Previous value ke comparison me percentage change calculate karta hai.
+
+KYU:
+Sales/revenue growth percentage calculate karne ke liye.
+
+
+============================================================
+36. ROLLING / MOVING AVERAGE
+============================================================
+
+CODE:
+df["Moving_Average"] = (
+    df["Sales"].rolling(7).mean()
+)
+
+KYA:
+Har point par last 7 observations ka average calculate karta hai.
+
+KYU:
+Time-series data ka trend smooth karke overall movement samajhne ke liye.
+
+EXAMPLE:
+Daily sales me 7-day moving average.
+
+
+============================================================
+37. DUPLICATE / UNIQUE CHECK
+============================================================
+
+CODE:
+df["Email"].duplicated()
+
+KYA:
+Email values me duplicates identify karta hai.
+
+CODE:
+df["Email"].duplicated().sum()
+
+KYA:
+Duplicate emails ki total count.
+
+CODE:
+df["Email"].is_unique
+
+KYA:
+Check karta hai ki column ki values unique hain ya nahi.
+
+KYU:
+Email, Customer_ID, Transaction_ID jaise fields ki uniqueness verify karne ke liye.
+
+
+============================================================
+38. SAMPLING
+============================================================
+
+CODE:
+df.sample(10)
+
+KYA:
+Random 10 rows select karta hai.
+
+CODE:
+df.sample(n=100, random_state=42)
+
+KYA:
+Random 100 rows select karta hai.
+
+random_state=42:
+Same code run karne par reproducible random sample milne me help karta hai.
+
+CODE:
+df.sample(frac=0.1)
+
+KYA:
+Dataset ka approximately 10% sample select karta hai.
+
+KYU:
+Large dataset ko inspect ya sample analysis ke liye.
+
+
+============================================================
+39. CONDITIONAL SELECTION
+============================================================
+
+CODE:
+df.loc[
+    df["Salary"] > 50000,
+    ["Name", "Salary"]
+]
+
+KYA:
+Salary > 50,000 wale records me sirf Name aur Salary columns select karta hai.
+
+KYU:
+Condition + selected columns ko ek saath apply karne ke liye.
+
+
+CODE:
+df.loc[
+    (df["Age"] > 25) &
+    (df["Salary"] > 50000),
+    ["Name", "Age", "Salary"]
+]
+
+KYA:
+Age > 25 AND Salary > 50,000 wale records me selected columns return karta hai.
+
+KYU:
+Targeted business analysis ke liye.
+
+
+============================================================
+40. MISSING DATA REPORT
+============================================================
+
+CODE:
+missing = (
+    df.isnull()
+      .sum()
+      .sort_values(ascending=False)
+)
+
+KYA:
+Har column ki missing-value count nikal kar highest se lowest sort karta hai.
+
+KYU:
+Data cleaning priority identify karne ke liye.
+
+
+CODE:
+missing_percentage = (
+    df.isnull()
+      .mean()
+      .sort_values(ascending=False) * 100
+)
+
+KYA:
+Missing-value percentage ko descending order me deta hai.
+
+KYU:
+Kaunse columns me missing data sabse zyada hai ye quickly samajhne ke liye.
+
+
+============================================================
+41. GROUPBY + SORTING
+============================================================
+
+CODE:
+result = (
+    df.groupby("Department")["Salary"]
+      .mean()
+      .sort_values(ascending=False)
+)
+
+KYA:
+1. Department-wise average Salary.
+2. Result ko highest se lowest sort.
+
+KYU:
+Ranked business reports ke liye.
+
+
+============================================================
+42. TOP / BOTTOM N
+============================================================
+
+CODE:
+df.nlargest(10, "Salary")
+
+KYA:
+Salary ke top 10 records.
+
+CODE:
+df.nsmallest(10, "Salary")
+
+KYA:
+Salary ke lowest 10 records.
+
+KYU:
+Top/bottom performers, products, customers etc. identify karne ke liye.
+
+
+TOP CUSTOMERS:
+
+CODE:
+df.groupby("Customer")["Sales"].sum().nlargest(10)
+
+KYA:
+1. Customer-wise total sales.
+2. Top 10 customers.
+
+KYU:
+Customer revenue analysis me bahut common.
+
+
+============================================================
+43. MULTI-LEVEL GROUPBY
+============================================================
+
+CODE:
+df.groupby(
+    ["Department", "Gender"]
+)["Salary"].mean()
+
+KYA:
+Department + Gender ke combination ke basis par average Salary.
+
+KYU:
+Detailed segmentation analysis ke liye.
+
+
+============================================================
+44. GROUPBY TRANSFORM
+============================================================
+
+CODE:
+df["Dept_Avg"] = (
+    df.groupby("Department")["Salary"]
+      .transform("mean")
+)
+
+KYA:
+Har employee ki row me uske department ka average Salary place karta hai.
+
+IMPORTANT DIFFERENCE:
+groupby().mean()
+-> summarized result deta hai.
+
+transform("mean")
+-> original row count maintain karta hai aur group value har relevant row me attach karta hai.
+
+
+CODE:
+df["Above_Average"] = (
+    df["Salary"] > df["Dept_Avg"]
+)
+
+KYA:
+Check karta hai ki employee ki salary department average se zyada hai ya nahi.
+
+KYU:
+Individual record ko group benchmark ke saath compare karne ke liye.
+
+
+============================================================
+45. CUSTOM FUNCTION
+============================================================
+
+CODE:
+def salary_category(salary):
+    if salary >= 80000:
+        return "High"
+    elif salary >= 50000:
+        return "Medium"
+    else:
+        return "Low"
+
+df["Salary_Category"] = (
+    df["Salary"].apply(salary_category)
+)
+
+KYA:
+Custom business logic se Salary ko High/Medium/Low categories me divide karta hai.
+
+KYU:
+Jab simple built-in operation ke bajay custom rules apply karne hon.
+
+
+============================================================
+46. EXPLODE
+============================================================
+
+EXAMPLE:
+Skills column:
+Python,SQL,Excel
+
+CODE:
+df["Skills"] = df["Skills"].str.split(",")
+
+KYA:
+Text ko list me convert karta hai.
+
+Result:
+[Python, SQL, Excel]
+
+
+CODE:
+df = df.explode("Skills")
+
+KYA:
+List ke har item ko separate row me convert karta hai.
+
+KYU:
+Multi-value cells ko analysis-friendly structure me convert karne ke liye.
+
+
+============================================================
+47. MELT - WIDE TO LONG
+============================================================
+
+EXAMPLE:
+Name | Jan | Feb | Mar
+
+CODE:
+long_df = pd.melt(
+    df,
+    id_vars=["Name"],
+    value_vars=["Jan", "Feb", "Mar"],
+    var_name="Month",
+    value_name="Sales"
+)
+
+KYA:
+Wide format ko long format me convert karta hai.
+
+RESULT STRUCTURE:
+Name | Month | Sales
+
+KYU:
+Visualization, reporting aur BI tools ke liye data reshape karne me useful.
+
+
+============================================================
+48. PIVOT / RESHAPE
+============================================================
+
+CODE:
+df.pivot(
+    index="Date",
+    columns="Product",
+    values="Sales"
+)
+
+KYA:
+Long-format data ko wide format me reshape karta hai.
+
+KYU:
+Reporting ya matrix-style analysis ke liye.
+
+
+============================================================
+49. DUPLICATE COLUMNS
+============================================================
+
+CODE:
+df.columns.duplicated()
+
+KYA:
+Check karta hai ki column names duplicate hain ya nahi.
+
+KYU:
+Duplicate column names data processing me confusion/errors create kar sakte hain.
+
+
+============================================================
+50. MEMORY OPTIMIZATION
+============================================================
+
+CODE:
+df["Department"] = (
+    df["Department"].astype("category")
+)
+
+KYA:
+Department jaise repeated categorical values ko category dtype me convert karta hai.
+
+KYU:
+Large datasets me memory usage reduce karne me help kar sakta hai.
+
+
+============================================================
+51. LARGE CSV / CHUNKS
+============================================================
+
+CODE:
+for chunk in pd.read_csv(
+    "large_data.csv",
+    chunksize=10000
+):
+    print(chunk.shape)
+
+KYA:
+CSV ko ek saath load karne ke bajay 10,000-row chunks me read karta hai.
+
+KYU:
+Bahut large CSV ko limited memory me process karne ke liye.
+
+
+============================================================
+52. EXCEL
+============================================================
+
+CODE:
+pd.read_excel("data.xlsx")
+
+KYA:
+Excel file read karta hai.
+
+
+CODE:
+pd.read_excel(
+    "data.xlsx",
+    sheet_name="Sales"
+)
+
+KYA:
+Excel ki specific Sales sheet read karta hai.
+
+
+CODE:
+pd.ExcelFile("data.xlsx")
+
+KYA:
+Excel workbook ko inspect/read operations ke liye object ke roop me open karta hai.
+
+KYU:
+Excel-based business reports ke saath kaam karne ke liye.
+
+
+============================================================
+53. MULTIPLE EXCEL SHEETS
+============================================================
+
+CODE:
+sheets = pd.read_excel(
+    "data.xlsx",
+    sheet_name=None
+)
+
+KYA:
+Workbook ki multiple sheets ko read karta hai.
+
+KYU:
+Multi-sheet business reports process karne ke liye.
+
+
+============================================================
+54. EXPORT SELECTED COLUMNS
+============================================================
+
+CODE:
+df[["Name", "Department", "Salary"]].to_csv(
+    "employees.csv",
+    index=False
+)
+
+KYA:
+Sirf selected columns ko CSV me export karta hai.
+
+KYU:
+Cleaned/relevant report share karne ke liye.
+
+
+============================================================
+55. DATA ANALYST CORE PANDAS TOPICS
+============================================================
+
+DATA LOADING:
+- read_csv()
+- read_excel()
+- read_json()
+- read_sql()
+
+DATA INSPECTION:
+- head()
+- tail()
+- shape
+- columns
+- index
+- info()
+- describe()
+- dtypes
+- nunique()
+- count()
+- sample()
+
+SELECTION:
+- loc
+- iloc
+- column selection
+- conditional selection
+
+FILTERING:
+- conditions
+- isin()
+- between()
+- query()
+
+CLEANING:
+- isnull()
+- fillna()
+- dropna()
+- duplicated()
+- drop_duplicates()
+- replace()
+- astype()
+- to_numeric()
+- to_datetime()
+
+ANALYSIS:
+- mean()
+- median()
+- sum()
+- min()
+- max()
+- std()
+- var()
+- quantile()
+- corr()
+
+GROUPING:
+- groupby()
+- agg()
+- transform()
+- value_counts()
+
+COMBINING DATA:
+- merge()
+- join()
+- concat()
+
+RESHAPING:
+- pivot_table()
+- pivot()
+- melt()
+- explode()
+- crosstab()
+
+TIME SERIES:
+- dt.year
+- dt.month
+- diff()
+- pct_change()
+- rolling()
+- cumsum()
+- cummax()
+
+ADVANCED:
+- rank()
+- apply()
+- map()
+- outlier detection
+- chunk processing
+- memory optimization
+
+
+============================================================
+56. TYPICAL DATA ANALYST WORKFLOW
+============================================================
+
+RAW CSV / EXCEL / SQL
+        |
+        v
+LOAD DATA
+        |
+        +--> read_csv()
+        +--> read_excel()
+        +--> read_sql()
+        |
+        v
+INSPECT DATA
+        |
+        +--> head()
+        +--> info()
+        +--> describe()
+        +--> shape
+        +--> dtypes
+        |
+        v
+DATA CLEANING
+        |
+        +--> missing values
+        +--> duplicates
+        +--> wrong data types
+        +--> inconsistent text
+        +--> outliers
+        |
+        v
+EDA
+        |
+        +--> filtering
+        +--> sorting
+        +--> value_counts()
+        +--> groupby()
+        +--> agg()
+        +--> statistics
+        +--> correlation
+        |
+        v
+ADVANCED ANALYSIS
+        |
+        +--> merge()
+        +--> concat()
+        +--> pivot_table()
+        +--> transform()
+        +--> apply()
+        +--> time analysis
+        |
+        v
+BUSINESS INSIGHTS
+        |
+        v
+VISUALIZATION
+        |
+        +--> Matplotlib
+        +--> Seaborn
+        +--> Power BI
+        |
+        v
+FINAL REPORT / DASHBOARD
+
+
+============================================================
+57. HOW TO LEARN THESE CODES
+============================================================
+
+Sirf syntax memorize mat karo.
+
+Har code ko ek business question se connect karo.
+
+QUESTION:
+Top 10 customers kaun hain?
+
+CODE:
+df.groupby("Customer")["Sales"].sum().nlargest(10)
+
+LOGIC:
+Customer -> Group
+Sales -> Sum
+nlargest(10) -> Top 10
+
+
+QUESTION:
+Department-wise average salary?
+
+CODE:
+df.groupby("Department")["Salary"].mean()
+
+LOGIC:
+Department -> Group
+Salary -> Average
+
+
+QUESTION:
+Salary me missing values kitni hain?
+
+CODE:
+df["Salary"].isnull().sum()
+
+LOGIC:
+isnull() -> Missing identify
+sum() -> Count
+
+
+QUESTION:
+Highest salary wale 10 employees?
+
+CODE:
+df.nlargest(10, "Salary")
+
+LOGIC:
+Salary -> Sort/compare
+nlargest(10) -> Top 10
+
+
+============================================================
+58. FINAL UNDERSTANDING
+============================================================
+
+Data Analyst ke liye Pandas ka main goal har function ko ratna nahi hai.
+
+Main goal hai:
+
+LOAD
+  ->
+INSPECT
+  ->
+CLEAN
+  ->
+TRANSFORM
+  ->
+ANALYZE
+  ->
+FIND INSIGHTS
+  ->
+VISUALIZE
+  ->
+REPORT
+
+Agar tum kisi real-world dataset par ye complete workflow independently perform kar sakte ho, to tumhara Pandas practical Data Analyst level par strong hai.
